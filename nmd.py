@@ -669,14 +669,13 @@ with dashboard_in_depth:
         # delta = {'position': "bottom", 'reference': round(float(dao_twitter['Followers'][1]),3)},
         domain = {'x': [0, 1], 'y': [0, 1]}))
     fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(215,215,215,255)',})
-    fig.update_layout(height=220, width=600)    
+    fig.update_layout(height=260, width=600)
     fig.update_layout(font=dict(
             # family="Courier New, monospace",
             # size=18,
             color="black"
         ))
-    c2.plotly_chart(fig,use_container_width=True)
-    c1.plotly_chart(top_target_wallets_fig, use_container_width=True)
+    c3.plotly_chart(fig,use_container_width=True)
 
     prop = "https://node-api.flipsidecrypto.com/api/v2/queries/4c233639-4cdb-486c-af11-3ea18d365086/data/latest"
     prop = pd.read_json(prop)
