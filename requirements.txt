@@ -4,11 +4,3 @@ pandas
 seaborn 
 matplotlib
 plotly
-scikit-learn
-shroomdk
-plost
-
-shroomdk
-
-
-urllib
