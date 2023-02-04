@@ -660,6 +660,7 @@ with dashboard_in_depth:
 
     st.title('Target wallets')
     c1,c2=st.columns((60,40))
+    c1.plotly_chart(top_target_wallets_fig, use_container_width=True)
     fig = go.Figure(go.Indicator(
         mode = "number",
         value = int(top_target_wallets.shape[0]),
@@ -676,7 +677,7 @@ with dashboard_in_depth:
             color="black"
         ))
     # c2.plotly_chart(fig,use_container_width=True)
-    c1.plotly_chart(fig, use_container_width=True)
+    c2.plotly_chart(fig, use_container_width=True)
 
     prop = "https://node-api.flipsidecrypto.com/api/v2/queries/4c233639-4cdb-486c-af11-3ea18d365086/data/latest"
     prop = pd.read_json(prop)
