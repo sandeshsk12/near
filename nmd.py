@@ -35,7 +35,7 @@ c2.markdown(f"""
   </div>
 """, unsafe_allow_html=True)
 
-Overview, dashboard_in_depth, proposal_info_tab, writeup, recommendation  = st.tabs(['**Overview**','**In-Depth dashboard**','**Proposal information**','**Writeup**','**Recommendation**'])
+Overview, dashboard_in_depth, proposal_info_tab, writeup, takeaways, recommendation  = st.tabs(['**Overview**','**In-Depth dashboard**','**Proposal information**','**Writeup**','**Takeaways**','**Recommendation**'])
 
 with Overview:
     
@@ -50,7 +50,7 @@ with Overview:
         width=600,
         height=400,)
     prop_info_pass_fail_dist_fig.update_layout(
-        title="<a href='https://node-api.flipsidecrypto.com/api/v2/queries/a3e4a5eb-bc71-4589-8ac9-d98f1c425cef/data/latest'>Distribution of proposals</a>",
+        title="<a href='https://app.flipsidecrypto.com/velocity/queries/a3e4a5eb-bc71-4589-8ac9-d98f1c425cef'>Distribution of proposals</a>",
         # xaxis_title="Date",
         # yaxis_title="USD",
         # legend_title="",
@@ -587,7 +587,7 @@ with dashboard_in_depth:
         width=600,
         height=400,)
     avg_duration_between_sub_and_pass.update_layout(
-        title="<a href='https://node-api.flipsidecrypto.com/api/v2/queries/e9905d70-6870-44dd-aa32-8c6e7f32476f/data/latest'> Average duration for Decision </a>",
+        title="<a href='https://node-api.flipsidecrypto.com/api/v2/queries/e9905d70-6870-44dd-aa32-8c6e7f32476f/data/latest'> Avg. Decision Time </a>",
         # xaxis_title="Date",
         yaxis_title="Number of days",
         # legend_title="",
@@ -629,7 +629,7 @@ with dashboard_in_depth:
         width=600,
         height=400,)
     average_duration_for_pay.update_layout(
-        title="<a href='https://node-api.flipsidecrypto.com/api/v2/queries/38932b59-1ed3-4ebe-bbbe-5d1600c9b1c2/data/latest'> Average duration for payment</a>",
+        title="<a href='https://node-api.flipsidecrypto.com/api/v2/queries/38932b59-1ed3-4ebe-bbbe-5d1600c9b1c2/data/latest'> Avg. Payment Time</a>",
         # xaxis_title="Date",
         yaxis_title="Number of days",
         # legend_title="",
@@ -800,9 +800,20 @@ with dashboard_in_depth:
     c1.plotly_chart(top_voters_heatmap, use_container_width=True)
 
     with writeup:
-        st.markdown('Find the entire code here https://github.com/sandeshsk12/near.git')
-        st.title('Introduction')
-        st.markdown("""
+        
+        st.markdown(
+            """
+            <div class="card text-white bg-secondary mb-3" >
+        <div class="card-header"> <h2>  </h2></div>
+        <div class="card-body">
+            <t>
+            Find the entire code here https://github.com/sandeshsk12/near.git
+            <p class="card-text"></p>
+        </div>
+        """, unsafe_allow_html=True)
+        c1,c2=st.columns((60,40))
+        c1.title('Introduction')
+        c1.markdown("""
             ### Near Marketing DAO
 
             The Near Marketing DAO is a decentralized autonomous organization in the NEAR ecosystem, made up of global marketing professionals, creatives, and NEAR enthusiasts.
@@ -820,8 +831,142 @@ with dashboard_in_depth:
 
         """
         )
+        c2.title('Objective')
+        c2.markdown("""
+        ### MarketingDAO Analytics Dashboard Objective
+
+        The objective of the MarketingDAO's analytics dashboard is to track proposals and funding for the grants program by using data available in the proposals on AstroDAO. The dashboard should display key metrics, including the number of grants approved, the amount of funds disbursed over time, project names, target wallets, council members, and votes. The purpose of this dashboard is to provide a clear and comprehensive overview of the grants program, enabling the MarketingDAO to make data-driven decisions and allocate funds effectively.
+
+
+        """)
         st.title('Grant Approval Process')
         st.image('flow_nmd.png',use_column_width=True)
+        st.title('Methodology')
+        with st.expander("Identifying Proposals and their Status"):
+            st.markdown("""
+
+            ## Identifying proposals and their status. 
+
+            
+
+            ### Identifying proposals
+            - We use the `near.core.fact_transactions` to identify the proposal submission. 
+            - We filter the transactions based on method being `add_proposal`, tx_receiver being `marketing.sputnik-dao.near`. 
+            - Decoding the arguments under actions field results in Proposal id and the proposal text.
+
+           
+
+            ### Identifying votes
+            - `near.core.fact_receipts` tables from flipside are used instead of `near.core.fact_transactions` as the transactions table does not identify all the votes and proposals. 
+            - For example, `https://nearblocks.io/txns/GEX8tAHPmBPMTB2ub6d3fab3w4dTdsmCk74mjUguTHTU#execution` has the proposal id required to identify the vote and proposal in the second receipt which is not available in the fact transactions table. Hence we go with `near.core.fact_receipts` tables. 
+            
+            
+
+            ### Deciding if the proposal is Approved, Rejected or Expired. 
+            `Near marketingDAO`  needs a simple majority to pass the proposal. With there being 5 council members at a given time, the proposal needs at least 3 votes to being considered as Approved or Rejected. 
+            - Using the same rule, we identify 
+            - proposals with less than 3 as expired
+            - Proposals with more Approve votes than rejects as Approved 
+            - Proposals with more Reject votes than approved as Rejected. 
+            - We extract the URL from the proposal text using regular expressions.
+            
+            
+
+            Query Link : https://app.flipsidecrypto.com/velocity/queries/a3e4a5eb-bc71-4589-8ac9-d98f1c425cef
+
+
+            Proposal category: the proposal category is dervied from Near MarketingDAO's transparency report which is available here.https://gov.near.org/t/approved-marketing-dao-council-remuneration-revised-for-relaunch/31912 .
+            The data obtained from the transaparency report is wrangled and displayed using python. 
+
+            """)
+        with st.expander("Grants issued"):
+            st.markdown("""
+            Payments issued: 
+            Identifying payments is a tricky affair. The payments are made not from a separate entity but rather from the near foundation. Hence, to identify the payments made we look at the near foundation accounts, ( 'nf-payments.near','nf-payments1.near','nf-payments2.near','nf-payments3.near','nf-payments4.near','nf-payments5.near' ) 
+            In order to accurately identify payments made only to near marketing grantees, we join the payments table and the proposal table on the target wallet provided. We further limit the entries to those having only 45 days difference between the proposal time and payment time. However, a caveat here is that if the target wallet had received grant money from another near DAO through near foundation in the same period, then it will be double counted. 
+            The data for payments made by near foundation to the respective wallets is extracted from near tables using Flipside query and is joined with proposal information using Pandas in python. 
+            The query for extracting payment info can be accessed here: 
+
+            1. Near ecosystem token : https://app.flipsidecrypto.com/velocity/queries/38932b59-1ed3-4ebe-bbbe-5d1600c9b1c2
+            
+            2. Near token: https://app.flipsidecrypto.com/velocity/queries/975c569b-eae7-47ec-a1bf-eae7b21e60a6
+
+            3. Proposal Information: https://app.flipsidecrypto.com/velocity/queries/a3e4a5eb-bc71-4589-8ac9-d98f1c425cef
+
+            Wrong approach used by other works, Some reports attempt to use the “kind” argument under actions to calculate the funds disbursed, this is a wrong approach, as even rejected transactions show up as having funds disbursed. For example, Proposal id 597, Example transaction hash: https://nearblocks.io/txns/CMVquTbk1LWoZHJsFntVPtkLV7cm3W9pNkmSRk8WVpSf#execution
+
+
+            """)
+        
+        with st.expander("Target wallets"):
+            st.markdown("""
+            ## Target wallet
+            The target wallets may differ from the proposer's address. To identify the target wallet, we use information from the proposal. With the help of a Regex in Python, we extract the target wallet from the proposal text. In cases where the target wallet information is missing from the proposal, we use the proposer's address as a substitute. 
+
+            """)
+        with st.expander("Voting activity"):
+            st.markdown("""
+            ## Identifying votes and voters
+
+
+
+            ### Identifying votes 
+            - Near.core.fact_receipts tables from flipside are used instead of near.core.fact_transactions 
+            - The transactions table does not identify all the votes and proposals. For example, 
+                https://nearblocks.io/txns/GEX8tAHPmBPMTB2ub6d3fab3w4dTdsmCk74mjUguTHTU#execution has the 
+                proposal id required to identify the vote and proposal in the second receipt which is not 
+                available in the fact transactions table. Hence we go with Near.core.fact_receipts tables. 
+            - The conditions placed while querying include:
+            - method name being `act_proposal`
+            - receiver id being `marketing.sputnik-dao.near`
+
+
+            
+            ### Identifying voters
+            - Voters are identified using the `predecessor_id` under the `actions` attribute
+            - The vote information can be extracted from the table after decoding the `argos` variable under the `actions` attribute in the `fact_receipts` table
+            - The query used to extract the voting activity:
+            https://app.flipsidecrypto.com/velocity/queries/7ec28185-d882-4a7f-89e8-991f7bb80ead
+
+
+
+            """)
+
+        st.title('Glossary')
+        st.markdown("""
+        Avg. Decision Time: 
+        The average number of days taken for a submitted proposal to receive an Approval or Rejection decision.
+
+        Avg. Payment Time:
+        The average number of days taken for an approved proposal to be Paid.
+
+        """)
+
+        st.title('SQL Queries')
+        st.markdown("""
+            
+            1. https://app.flipsidecrypto.com/velocity/queries/ed5b2960-2873-4f3b-bdf6-64733e94d8df
+
+            2. https://app.flipsidecrypto.com/velocity/queries/742b1591-89ff-48b7-84f3-275d11510ed8
+
+            3. https://app.flipsidecrypto.com/velocity/queries/38932b59-1ed3-4ebe-bbbe-5d1600c9b1c2
+
+            4. https://app.flipsidecrypto.com/velocity/queries/975c569b-eae7-47ec-a1bf-eae7b21e60a6
+
+            5. https://app.flipsidecrypto.com/velocity/queries/f62545cc-ee0f-4bc3-bb97-2124782bfdd2
+
+            6. https://app.flipsidecrypto.com/velocity/queries/4e76cabf-5362-4535-aeca-3ef817f807f5
+
+            7. https://app.flipsidecrypto.com/velocity/queries/a3e4a5eb-bc71-4589-8ac9-d98f1c425cef
+
+            8. https://app.flipsidecrypto.com/velocity/queries/e9905d70-6870-44dd-aa32-8c6e7f32476f
+
+            9. https://app.flipsidecrypto.com/velocity/queries/4c233639-4cdb-486c-af11-3ea18d365086
+
+            10. https://app.flipsidecrypto.com/velocity/queries/7ec28185-d882-4a7f-89e8-991f7bb80ead
+
+            """)
+
 
 
 
