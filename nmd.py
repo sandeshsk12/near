@@ -44,7 +44,7 @@ with Overview:
     proposal_info = pd.read_json(proposal_info)
     # st.dataframe(prop_pass[['PROPOSAL_SUBMITTED','PROPOSER','PROPOSAL_ID','PROPOSAL','PROPOSAL_URL','OUTCOME']])
     # c1,c2=st.columns(2)
-    prop_info_pass_fail_dist_fig=px.pie(proposal_info.groupby(by='OUTCOME',as_index=False).count(),names='OUTCOME',values='PROPOSAL_ID')
+    prop_info_pass_fail_dist_fig=px.pie(proposal_info.groupby(by='OUTCOME',as_index=False).count(),names='OUTCOME',values='PROPOSAL_ID',color_discrete_sequence=["blue", "red", "green", "goldenrod", "magenta"])
     prop_info_pass_fail_dist_fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(235,235,235,255)',})
     prop_info_pass_fail_dist_fig.update_layout(        
         width=600,
@@ -90,13 +90,13 @@ with Overview:
     payments=pass_prop_time_and_pay[(pass_prop_time_and_pay['diff_days'] < 60) & (pass_prop_time_and_pay['diff_days'] >0) & (pass_prop_time_and_pay['AMOUNT']<40000)]
     payments['payment_timestamp']=pd.to_datetime(payments['payment_timestamp'])
     payments_paid=payments.resample('M', on='payment_timestamp').sum()
-    payment_trend_fig=px.bar(payments_paid,x=payments_paid.index,y='AMOUNT')
+    payment_trend_fig=px.bar(payments_paid,x=payments_paid.index,y='AMOUNT',color_discrete_sequence=["blue", "red", "green", "goldenrod", "magenta"])
     payment_trend_fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(235,235,235,255)',})
     payment_trend_fig.update_layout(        
         width=600,
         height=400,)
     payment_trend_fig.update_layout(
-        title="<a href='https://node-api.flipsidecrypto.com/api/v2/queries/975c569b-eae7-47ec-a1bf-eae7b21e60a6/data/latest'>Payments issued</a>",
+        title="<a href='https://app.flipsidecrypto.com/velocity/queries/38932b59-1ed3-4ebe-bbbe-5d1600c9b1c2'>Payments issued</a>",
         xaxis_title="Date",
         yaxis_title="USD",
         # legend_title="",
@@ -110,13 +110,13 @@ with Overview:
     top_target_wallets=payments.groupby(by='target',as_index=False).sum()
     top_target_wallets.sort_values(by='AMOUNT',ascending=False,inplace=True)
     # top_target_wallets.head(5)
-    top_target_wallets_fig=px.bar(top_target_wallets.head(5),x='target',y='AMOUNT')
+    top_target_wallets_fig=px.bar(top_target_wallets.head(5),x='target',y='AMOUNT',color_discrete_sequence=["blue", "red", "green", "goldenrod", "magenta"])
     top_target_wallets_fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(235,235,235,255)',})
     top_target_wallets_fig.update_layout(        
         width=600,
         height=500,)
     top_target_wallets_fig.update_layout(
-        title="<a href='https://node-api.flipsidecrypto.com/api/v2/queries/975c569b-eae7-47ec-a1bf-eae7b21e60a6/data/latest'>Top target wallets</a>",
+        title="<a href='https://app.flipsidecrypto.com/velocity/queries/975c569b-eae7-47ec-a1bf-eae7b21e60a6'>Top target wallets</a>",
         xaxis_title="Date",
         yaxis_title="USD",
         # legend_title="",
@@ -139,7 +139,7 @@ with Overview:
         width=600,
         height=500,)
     top_voters_heatmap.update_layout(
-        title="<a href='https://node-api.flipsidecrypto.com/api/v2/queries/f62545cc-ee0f-4bc3-bb97-2124782bfdd2/data/latest'>Top voters</a>",
+        title="<a href='https://app.flipsidecrypto.com/velocity/queries/f62545cc-ee0f-4bc3-bb97-2124782bfdd2''>Top voters</a>",
         # xaxis_title="Date",
         # yaxis_title="USD",
         # legend_title="",
@@ -530,13 +530,13 @@ with dashboard_in_depth:
 
     prop_pass_monthly = "https://node-api.flipsidecrypto.com/api/v2/queries/4e76cabf-5362-4535-aeca-3ef817f807f5/data/latest"
     prop_pass_monthly = pd.read_json(prop_pass_monthly)
-    prop_pass_monthly_fig=px.bar(prop_pass_monthly,x='MONTH',y='PROPS',color='OUTCOME')
+    prop_pass_monthly_fig=px.bar(prop_pass_monthly,x='MONTH',y='PROPS',color='OUTCOME',color_discrete_sequence=["blue", "red", "green", "goldenrod", "magenta"])
     prop_pass_monthly_fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(235,235,235,255)',})    
     prop_pass_monthly_fig.update_layout(        
         width=600,
         height=400,)
     prop_pass_monthly_fig.update_layout(
-        title="<a href='https://node-api.flipsidecrypto.com/api/v2/queries/4e76cabf-5362-4535-aeca-3ef817f807f5/data/latest'> Proposals over time</a>",
+        title="<a href='https://app.flipsidecrypto.com/velocity/queries/4e76cabf-5362-4535-aeca-3ef817f807f5'> Proposals over time</a>",
         xaxis_title="Date",
         yaxis_title="USD",
         # legend_title="",
@@ -552,13 +552,13 @@ with dashboard_in_depth:
     top_proposers=proposal_info[proposal_info['OUTCOME']=='Approved']
     top_proposers=top_proposers.groupby(by='PROPOSER',as_index=False).count()
     top_proposers=top_proposers.sort_values(by='PROPOSAL_ID',ascending=False)
-    top_proposers_fig=px.bar(top_proposers.head(5),x='TX_HASH',y='PROPOSER',color='PROPOSER',orientation='h')
+    top_proposers_fig=px.bar(top_proposers.head(5),x='TX_HASH',y='PROPOSER',color='PROPOSER',orientation='h',color_discrete_sequence=["blue", "red", "green", "goldenrod", "magenta"])
     top_proposers_fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(235,235,235,255)',})    
     top_proposers_fig.update_layout(        
         width=600,
         height=400,)
     top_proposers_fig.update_layout(
-        title="<a href='https://node-api.flipsidecrypto.com/api/v2/queries/4e76cabf-5362-4535-aeca-3ef817f807f5/data/latest'> Top grant awardees </a>",
+        title="<a href='https://app.flipsidecrypto.com/velocity/queries/4e76cabf-5362-4535-aeca-3ef817f807f5> Top grant awardees </a>",
         xaxis_title="Grants awarded",
         yaxis_title="Proposer",
         # legend_title="",
@@ -581,13 +581,13 @@ with dashboard_in_depth:
     pass_prop_time['diff_days'] = (pass_prop_time['PASSED_TIME'] - pass_prop_time['PROPOSAL_SUBMITTED']) / np.timedelta64(1, 'D')
     pass_prop_time.sort_values(by='PROPOSAL_SUBMITTED',ascending=True,inplace=True)
     pass_prop_time=pass_prop_time[pass_prop_time['diff_days']>0]
-    avg_duration_between_sub_and_pass=px.violin(pass_prop_time,y='diff_days')
+    avg_duration_between_sub_and_pass=px.violin(pass_prop_time,y='diff_days',color_discrete_sequence=["blue", "red", "green", "goldenrod", "magenta"])
     avg_duration_between_sub_and_pass.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(235,235,235,255)',})    
     avg_duration_between_sub_and_pass.update_layout(        
         width=600,
         height=400,)
     avg_duration_between_sub_and_pass.update_layout(
-        title="<a href='https://node-api.flipsidecrypto.com/api/v2/queries/e9905d70-6870-44dd-aa32-8c6e7f32476f/data/latest'> Avg. Decision Time </a>",
+        title="<a href='https://app.flipsidecrypto.com/velocity/queries/e9905d70-6870-44dd-aa32-8c6e7f32476f'> Avg. Decision Time </a>",
         # xaxis_title="Date",
         yaxis_title="Number of days",
         # legend_title="",
@@ -600,7 +600,7 @@ with dashboard_in_depth:
 
     received_applications=pd.read_excel('Marketing_dao.xlsx',skiprows=6)
     received_applications_cat=received_applications['Category'].value_counts().head(10)
-    received_applications_cat_fig=px.pie(received_applications_cat,names=received_applications_cat.keys(),values=received_applications_cat.values)
+    received_applications_cat_fig=px.pie(received_applications_cat,names=received_applications_cat.keys(),values=received_applications_cat.values,color_discrete_sequence=["blue", "red", "green", "goldenrod", "magenta"])
     received_applications_cat_fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(235,235,235,255)',})    
     received_applications_cat_fig.update_layout(        
         width=600,
@@ -623,13 +623,13 @@ with dashboard_in_depth:
     c1.plotly_chart(payment_trend_fig, use_container_width=True)
     payments=pass_prop_time_and_pay[(pass_prop_time_and_pay['diff_days'] < 45) & (pass_prop_time_and_pay['diff_days'] >0) & (pass_prop_time_and_pay['AMOUNT']<20000)]
     
-    average_duration_for_pay=px.violin(payments,y='diff_days')
+    average_duration_for_pay=px.violin(payments,y='diff_days',color_discrete_sequence=["blue", "red", "green", "goldenrod", "magenta"])
     average_duration_for_pay.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(235,235,235,255)',})    
     average_duration_for_pay.update_layout(        
         width=600,
         height=400,)
     average_duration_for_pay.update_layout(
-        title="<a href='https://node-api.flipsidecrypto.com/api/v2/queries/38932b59-1ed3-4ebe-bbbe-5d1600c9b1c2/data/latest'> Avg. Payment Time</a>",
+        title="<a href='https://app.flipsidecrypto.com/velocity/queries/38932b59-1ed3-4ebe-bbbe-5d1600c9b1c2'> Avg. Payment Time</a>",
         # xaxis_title="Date",
         yaxis_title="Number of days",
         # legend_title="",
@@ -640,13 +640,13 @@ with dashboard_in_depth:
         ))
     c2.plotly_chart(average_duration_for_pay,use_container_width=True)
 
-    coin_preference=px.pie(payments.groupby(by='COIN',as_index=False).sum(),names='COIN',values='AMOUNT')
+    coin_preference=px.pie(payments.groupby(by='COIN',as_index=False).sum(),names='COIN',values='AMOUNT',color_discrete_sequence=["blue", "red", "green", "goldenrod", "magenta"])
     coin_preference.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(235,235,235,255)',})    
     coin_preference.update_layout(        
         width=600,
         height=400,)
     coin_preference.update_layout(
-        title="<a href='https://node-api.flipsidecrypto.com/api/v2/queries/38932b59-1ed3-4ebe-bbbe-5d1600c9b1c2/data/latest'>Payout asset</a>",
+        title="<a href='https://app.flipsidecrypto.com/velocity/queries/38932b59-1ed3-4ebe-bbbe-5d1600c9b1c2'>Payout asset</a>",
         # xaxis_title="Date",
         # yaxis_title="Number of days",
         # legend_title="",
@@ -702,13 +702,13 @@ with dashboard_in_depth:
     mom_target=(grouped_df.sort_values(by='Month',ascending=True))
     mom_target['MoM Growth']=mom_target['MoM Growth']*100
     # px.line(mom_target,x='Month',y='MoM Growth')
-    target_mom_growth=px.line(mom_target,x='Month',y='MoM Growth')
+    target_mom_growth=px.line(mom_target,x='Month',y='MoM Growth',color_discrete_sequence=["blue", "red", "green", "goldenrod", "magenta"])
     target_mom_growth.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(235,235,235,255)',})    
     target_mom_growth.update_layout(        
         width=600,
         height=220,)
     target_mom_growth.update_layout(
-        title="<a href='https://node-api.flipsidecrypto.com/api/v2/queries/4c233639-4cdb-486c-af11-3ea18d365086/data/latest'>Month-on-month growth of target</a>",
+        title="<a href='https://app.flipsidecrypto.com/velocity/queries/4c233639-4cdb-486c-af11-3ea18d365086'>Month-on-month growth of target</a>",
         xaxis_title="Date",
         yaxis_title="Growth %",
         # legend_title="",
@@ -753,13 +753,13 @@ with dashboard_in_depth:
     temp=temp.groupby(by=['VOTER','VOTE'],as_index=False).count()
     pv=temp.pivot(index='VOTER',columns='VOTE',values='PROPOSAL_ID')
     # px.line(mom_target,x='Month',y='MoM Growth')
-    voting_activity=px.imshow(pv,text_auto=True)
+    voting_activity=px.imshow(pv,text_auto=True,color_continuous_scale=px.colors.sequential.Blues)
     voting_activity.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(235,235,235,255)',})    
     voting_activity.update_layout(        
         width=600,
         height=450,)
     voting_activity.update_layout(
-        title="<a href='https://node-api.flipsidecrypto.com/api/v2/queries/7ec28185-d882-4a7f-89e8-991f7bb80ead/data/latest'>Voting activity of council members</a>",
+        title="<a href='https://app.flipsidecrypto.com/velocity/queries/7ec28185-d882-4a7f-89e8-991f7bb80ead'>Voting activity of council members</a>",
         # xaxis_title="Date",
         # yaxis_title="Growth %",
         # legend_title="",
@@ -780,14 +780,14 @@ with dashboard_in_depth:
     end.columns=['VOTER','last_day']
     start_end=start.merge(end, on='VOTER', how='inner')
 
-    start_end_fig = px.timeline(start_end, x_start="First_day", x_end="last_day", y="VOTER")
+    start_end_fig = px.timeline(start_end, x_start="First_day", x_end="last_day", y="VOTER",color_discrete_sequence=["blue", "red", "green", "goldenrod", "magenta"])
     start_end_fig.update_yaxes(autorange="reversed") # otherwise tasks are listed from the bottom up
     start_end_fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(235,235,235,255)',})    
     start_end_fig.update_layout(        
         width=600,
         height=500,)
     start_end_fig.update_layout(
-        title="<a href='https://node-api.flipsidecrypto.com/api/v2/queries/7ec28185-d882-4a7f-89e8-991f7bb80ead/data/latest'>Start and end of Voting members</a>",
+        title="<a href='https://app.flipsidecrypto.com/velocity/queries/7ec28185-d882-4a7f-89e8-991f7bb80ead'>Start and end of Voting members</a>",
         # xaxis_title="Date",
         # yaxis_title="Growth %",
         # legend_title="",
@@ -942,17 +942,27 @@ with dashboard_in_depth:
         The average number of days taken for an approved proposal to be Paid.
 
         """)
-
-        st.markdown(
-            """
+        st.markdown(f"""
+            # <div style='text-align: center'>
             <div class="card text-white bg-secondary mb-3" >
-        <div class="card-header"> <h2> Note to reviewer </h2></div>
-        <div class="card-body">
-            <t>
-            While the 
-            <p class="card-text"></p>
-        </div>
-        """, unsafe_allow_html=True)
+
+            <div class="card-header">Note to reviewer <h2> <br> 
+
+            Observation on Project Names: 
+            
+            It has been observed that out of the 500+ proposals, only 26 have a clearly defined project name. This makes it difficult to extract the project name using text processing. As a result, the metric of project name has been dropped from the dashboard.
+
+            Extraction for Interested Users
+
+            For users who are interested in extracting project names, the following python expression can be used:
+
+            Python code: <br>
+            ```match = re.search(r"Project name: (.*?),|Project Name: (.*?)|project name: (.*?),|Project name: (.*?):|Project name: (.*?);|Project name : (.*?),|Project: (.*?).", text)```
+            <br></h2></div>    
+                <p class="card-text"></p>
+            </div>
+            </div>
+            """, unsafe_allow_html=True)
 
         st.title('SQL Queries')
         st.markdown("""
