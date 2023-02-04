@@ -925,6 +925,7 @@ with dashboard_in_depth:
             ### Identifying voters
             - Voters are identified using the `predecessor_id` under the `actions` attribute
             - The vote information can be extracted from the table after decoding the `argos` variable under the `actions` attribute in the `fact_receipts` table
+            - We consider a voter to be a council member at some point of the time only if they have voted a minimum of 5 times
             - The query used to extract the voting activity:
             https://app.flipsidecrypto.com/velocity/queries/7ec28185-d882-4a7f-89e8-991f7bb80ead
 
@@ -941,6 +942,17 @@ with dashboard_in_depth:
         The average number of days taken for an approved proposal to be Paid.
 
         """)
+
+        st.markdown(
+            """
+            <div class="card text-white bg-secondary mb-3" >
+        <div class="card-header"> <h2> Note to reviewer </h2></div>
+        <div class="card-body">
+            <t>
+            While the 
+            <p class="card-text"></p>
+        </div>
+        """, unsafe_allow_html=True)
 
         st.title('SQL Queries')
         st.markdown("""
@@ -965,6 +977,28 @@ with dashboard_in_depth:
 
             10. https://app.flipsidecrypto.com/velocity/queries/7ec28185-d882-4a7f-89e8-991f7bb80ead
 
+            """)
+        with takeaways:
+            st.title('Key takeaways')
+            st.markdown("""
+            - 439 proposals, or 75% of all submissions, have been approved with 10% of them expiring. The declining trend of expired proposals indicates prompt decision making with an average decision time of just 3 days, mostly being made within a week. The grant requests received are divided into 30% for community-related initiatives and 25% for creative projects.
+            - To date, grant funds of 1 million dollars have been disbursed to 75 wallets, with an average payment time of 20 days after approval. Most of the disbursed funds were in the form of NEAR tokens.
+            - Funding has been distributed to 71 target wallets, with the Russian community and Cizi31.near (a Turkish Near community) receiving the highest amount.
+            - The council of the community-driven organization has several members responsible for managing community resources and decision making on proposals. Recently, four members - whendacha, cryptocredit, alejandro, and So608 - have been particularly active in decision making and furthering community goals. Among the voters currently on the council, whendacha is the most active, exercising their right to remove votes and finalize decisions. This showcases whendacha's dedication and the council's experience and commitment in community management as they have been serving the community for an extended period of time.
+
+            """)
+        with recommendation:
+            st.title("Recommendation to the Near Marketing DAO team")
+            st.markdown("""
+            To build a complete on-chain dashboard, two main obstacles must be overcome:
+
+            - Information Extraction: To extract information from proposal texts, text processing is used in either SQL or Python to retrieve parameters such as target wallet, amount requested, project name, governance forum URL, and proposal category. However, the presence of non-standard data, such as the requested amount, can complicate the process. For example, the requested amount can have multiple formats (e.g., 500 USD, \$500, 500\$, 500 US Dollars, 500 Near worth USDC, 250\$ + 250\$, etc.). To make the system more robust and avoid this complexity, it is recommended to enforce a stricter standard template for proposals.
+
+            - Payments: Currently, payments are made through nf2-foundation.near and related addresses without any identification that it is a grant release for the Near Marketing DAO. To improve transparency, it is recommended that future payments made from Near Foundation-related accounts include a message indicating that it is for the Marketing DAO and include the proposal ID. This will help ensure that the source of the funds and the purpose for which they are being used is clear to all parties involved.
+            """)
+            st.markdown("")
+            st.markdown("""
+            It has been noted that some approved proposals have yet to receive a grant. In particular, six such proposals have been identified. This issue could stem from either the grantees' lack of knowledge about the requirement to fill out the Ironclad form, or from a delay in processing by the team. To address this, it is recommended to raise awareness about the process and to ensure timely follow-up of approved proposals, in order to reduce the risk of duplicate submissions.
             """)
 
 
