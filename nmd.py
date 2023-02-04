@@ -800,6 +800,7 @@ with dashboard_in_depth:
     c1.plotly_chart(top_voters_heatmap, use_container_width=True)
 
     with writeup:
+        st.markdown('Find the entire code here https://github.com/sandeshsk12/near.git')
         st.title('Introduction')
         st.markdown("""
             ### Near Marketing DAO
