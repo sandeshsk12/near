@@ -23,6 +23,10 @@ import streamlit.components.v1 as components
 st.set_page_config(page_title="Near marketing DAO", layout="wide",initial_sidebar_state="collapsed")
 
 st.markdown('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">',unsafe_allow_html=True)
+
+with st.spinner(text='loading'):
+    time.sleep(15)
+
 c1,c2=st.columns((20,80))
 c1.image('2023-02-01_23-43.png',use_column_width=True)
 c2.markdown(f"""
@@ -807,7 +811,9 @@ with dashboard_in_depth:
         <div class="card-header"> <h2>  </h2></div>
         <div class="card-body">
             <t>
-            Find the entire code here https://github.com/sandeshsk12/near.git
+            Find the entire code here https://github.com/sandeshsk12/near.git<br>
+            Discord handle : sandesh#8645 <br>
+            Twitter link : https://twitter.com/Sandesh_K_12/status/1621732207315546112?s=20
             <p class="card-text"></p>
         </div>
         """, unsafe_allow_html=True)
