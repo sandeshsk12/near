@@ -87,7 +87,7 @@ with Overview:
     prop_passed_time_with_info.sort_index(inplace=True)
     pass_prop_time_and_pay=pd.merge(prop_passed_time_with_info,pay,how='inner', left_on='target',right_on='RECEIVER' )
     pass_prop_time_and_pay['diff_days'] = (pass_prop_time_and_pay['payment_timestamp'] - pass_prop_time_and_pay['Proposed_time']) / np.timedelta64(1, 'D')
-    payments=pass_prop_time_and_pay[(pass_prop_time_and_pay['diff_days'] < 60) & (pass_prop_time_and_pay['diff_days'] >0) & (pass_prop_time_and_pay['AMOUNT']<10000)]
+    payments=pass_prop_time_and_pay[(pass_prop_time_and_pay['diff_days'] < 60) & (pass_prop_time_and_pay['diff_days'] >0) & (pass_prop_time_and_pay['AMOUNT']<40000)]
     payments['payment_timestamp']=pd.to_datetime(payments['payment_timestamp'])
     payments_paid=payments.resample('M', on='payment_timestamp').sum()
     payment_trend_fig=px.bar(payments_paid,x=payments_paid.index,y='AMOUNT')
@@ -161,6 +161,11 @@ with Overview:
         # delta = {'position': "bottom", 'reference': round(float(dao_twitter['Followers'][1]),3)},
         domain = {'x': [0, 1], 'y': [0, 1]}))
     fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(215,215,215,255)',})
+    fig.update_layout(font=dict(
+            # family="Courier New, monospace",
+            # size=18,
+            color="black"
+        ))
     fig.update_layout(height=260, width=600)
     c1.plotly_chart(fig,use_container_width=True)
 
