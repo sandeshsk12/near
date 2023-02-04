@@ -757,7 +757,7 @@ with dashboard_in_depth:
     temp=temp.groupby(by=['VOTER','VOTE'],as_index=False).count()
     pv=temp.pivot(index='VOTER',columns='VOTE',values='PROPOSAL_ID')
     # px.line(mom_target,x='Month',y='MoM Growth')
-    voting_activity=px.imshow(pv,text_auto=True,color_continuous_scale=px.colors.sequential.Blues)
+    voting_activity=px.imshow(pv,text_auto=True,color_continuous_scale=px.colors.sequential.Greens_r)
     voting_activity.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(235,235,235,255)',})    
     voting_activity.update_layout(        
         width=600,
