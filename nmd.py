@@ -179,6 +179,11 @@ with Overview:
         domain = {'x': [0, 1], 'y': [0, 1]}))
     fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(215,215,215,255)',})
     fig.update_layout(height=260, width=600)
+    fig.update_layout(font=dict(
+            # family="Courier New, monospace",
+            # size=18,
+            color="black"
+        ))
     c2.plotly_chart(fig,use_container_width=True)
 
     fig = go.Figure(go.Indicator(
@@ -191,6 +196,11 @@ with Overview:
         domain = {'x': [0, 1], 'y': [0, 1]}))
     fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(215,215,215,255)',})
     fig.update_layout(height=260, width=600)
+    fig.update_layout(font=dict(
+            # family="Courier New, monospace",
+            # size=18,
+            color="black"
+        ))
     c3.plotly_chart(fig,use_container_width=True)
 
     fig = go.Figure(go.Indicator(
@@ -203,6 +213,11 @@ with Overview:
         domain = {'x': [0, 1], 'y': [0, 1]}))
     fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(215,215,215,255)',})
     fig.update_layout(height=260, width=600)
+    fig.update_layout(font=dict(
+            # family="Courier New, monospace",
+            # size=18,
+            color="black"
+        ))
     c4.plotly_chart(fig,use_container_width=True)
 
 
@@ -436,6 +451,11 @@ with proposal_info_tab:
         domain = {'x': [0, 1], 'y': [0, 1]}))
     fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(215,215,215,255)',})
     fig.update_layout(height=160, width=600)
+    fig.update_layout(font=dict(
+            # family="Courier New, monospace",
+            # size=18,
+            color="black"
+        ))
     c1.plotly_chart(fig,use_container_width=True)
 
     fig = go.Figure(go.Indicator(
@@ -448,6 +468,11 @@ with proposal_info_tab:
         domain = {'x': [0, 1], 'y': [0, 1]}))
     fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(215,215,215,255)',})
     fig.update_layout(height=160, width=600)
+    fig.update_layout(font=dict(
+            # family="Courier New, monospace",
+            # size=18,
+            color="black"
+        ))
     c1.plotly_chart(fig,use_container_width=True)
 
     fig = go.Figure(go.Indicator(
@@ -460,6 +485,11 @@ with proposal_info_tab:
         domain = {'x': [0, 1], 'y': [0, 1]}))
     fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(215,215,215,255)',})
     fig.update_layout(height=160, width=600)
+    fig.update_layout(font=dict(
+            # family="Courier New, monospace",
+            # size=18,
+            color="black"
+        ))
     c1.plotly_chart(fig,use_container_width=True)
 
 
@@ -699,6 +729,11 @@ with dashboard_in_depth:
         domain = {'x': [0, 1], 'y': [0, 1]}))
     fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(215,215,215,255)',})
     fig.update_layout(height=220, width=600)
+    fig.update_layout(font=dict(
+            # family="Courier New, monospace",
+            # size=18,
+            color="black"
+        ))
     c1.plotly_chart(fig,use_container_width=True)
 
     c1.dataframe(Current_members,use_container_width=True)
