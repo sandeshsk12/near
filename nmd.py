@@ -1,5 +1,5 @@
 import streamlit as st 
-import seaborn as sns
+# import seaborn as sns
 import plotly.express as px
 import pandas as pd
 from datetime import datetime as dt
@@ -18,7 +18,7 @@ from datetime import datetime
 import udf
 import numpy as np 
 import streamlit.components.v1 as components
-pytrends = TrendReq(hl='en-US', tz=360) 
+
 
 st.set_page_config(page_title="Near marketing DAO", layout="wide",initial_sidebar_state="collapsed")
 
