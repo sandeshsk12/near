@@ -563,24 +563,24 @@ with dashboard_in_depth:
         ))
     c2.plotly_chart(avg_duration_between_sub_and_pass,use_container_width=True)
 
-    # received_applications=pd.read_excel('Marketing_dao.xlsx',skiprows=6)
-    # received_applications_cat=received_applications['Category'].value_counts().head(10)
-    # received_applications_cat_fig=px.pie(received_applications_cat,names=received_applications_cat.keys(),values=received_applications_cat.values)
-    # received_applications_cat_fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(235,235,235,255)',})    
-    # received_applications_cat_fig.update_layout(        
-    #     width=600,
-    #     height=400,)
-    # received_applications_cat_fig.update_layout(
-    #     title="<a href='https://gov.near.org/t/approved-marketing-dao-council-remuneration-revised-for-relaunch/31912'> Grant requests recieved by category </a>",
-    #     # xaxis_title="Date",
-    #     # yaxis_title="Number of days",
-    #     # legend_title="",
-    #     font=dict(
-    #         # family="Courier New, monospace",
-    #         size=18,
-    #         color="black"
-    #     ))
-    # c3.plotly_chart(received_applications_cat_fig,use_container_width=True)
+    received_applications=pd.read_excel('Marketing_dao.xlsx',skiprows=6)
+    received_applications_cat=received_applications['Category'].value_counts().head(10)
+    received_applications_cat_fig=px.pie(received_applications_cat,names=received_applications_cat.keys(),values=received_applications_cat.values)
+    received_applications_cat_fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(235,235,235,255)',})    
+    received_applications_cat_fig.update_layout(        
+        width=600,
+        height=400,)
+    received_applications_cat_fig.update_layout(
+        title="<a href='https://gov.near.org/t/approved-marketing-dao-council-remuneration-revised-for-relaunch/31912'> Grant requests recieved by category </a>",
+        # xaxis_title="Date",
+        # yaxis_title="Number of days",
+        # legend_title="",
+        font=dict(
+            # family="Courier New, monospace",
+            size=18,
+            color="black"
+        ))
+    c3.plotly_chart(received_applications_cat_fig,use_container_width=True)
 
     st.title('Funds disbursed')
     c1,c2,c3=st.columns((45,25,30))
